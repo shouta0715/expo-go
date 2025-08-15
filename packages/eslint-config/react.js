@@ -40,6 +40,7 @@ const config = tseslint.config(
       "react/no-unknown-property": "error",
       "react-hooks/exhaustive-deps": "error",
       "react/jsx-boolean-value": ["error", "never"],
+      "react/jsx-curly-brace-presence": ["error", "never"],
       "react/jsx-sort-props": [
         "error",
         {
