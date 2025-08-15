@@ -1,7 +1,8 @@
+import domToImage from "dom-to-image";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import { useEffect, useRef, useState } from "react";
-import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, StyleSheet, View, Platform } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import { Button } from "@/components/button";
 import { CircleButton } from "@/components/circle-button";
@@ -51,22 +52,44 @@ export default function Index() {
   const onAddSticker = () => {
     setIsModalVisible(true);
   };
-
   const onSaveImageAsync = async () => {
-    try {
-      const localUri = await captureRef(imageRef, {
-        height: 440,
-        quality: 1,
-      });
+    if (Platform.OS !== "web") {
+      try {
+        const localUri = await captureRef(imageRef, {
+          height: 440,
+          quality: 1,
+        });
 
-      await MediaLibrary.saveToLibraryAsync(localUri);
-      if (localUri) {
-        alert("Saved!");
+        await MediaLibrary.saveToLibraryAsync(localUri);
+        if (localUri) {
+          alert("Saved!");
+        }
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
+    } else {
+      if (!imageRef.current) return;
+
+      try {
+        const dataUrl = await domToImage.toJpeg(
+          imageRef.current as unknown as Node,
+          {
+            quality: 0.95,
+            width: 320,
+            height: 440,
+          },
+        );
+
+        const link = document.createElement("a");
+        link.download = "sticker-smash.jpeg";
+        link.href = dataUrl;
+        link.click();
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
+
   const onModalClose = () => {
     setIsModalVisible(false);
   };
