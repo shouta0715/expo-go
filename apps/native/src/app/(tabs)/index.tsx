@@ -77,7 +77,7 @@ export default function Index() {
             quality: 0.95,
             width: 320,
             height: 440,
-          }
+          },
         );
 
         const link = document.createElement("a");
