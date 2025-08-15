@@ -15,6 +15,7 @@ const config = tseslint.config(...tsConfig, ...reactConfig, {
     "eslint-plugin-n/no-process-env": "error",
     "expo/no-env-var-destructuring": "error",
     "expo/no-dynamic-env-var": "error",
+    "@typescript-eslint/no-require-imports": "off",
   },
 });
 

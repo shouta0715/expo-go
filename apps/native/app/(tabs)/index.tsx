@@ -1,9 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Button } from "@/components/button";
+import { ImageViewer } from "@/components/image-viewer";
 
+const PlaceholderImage = require("@/assets/images/background-image.png");
 export default function Index() {
   return (
     <View style={styles.container}>
-      <Text>Hello World</Text>
+      <View style={styles.imageContainer}>
+        <ImageViewer imageSource={PlaceholderImage} />
+      </View>
+      <View style={styles.footerContainer}>
+        <Button label="Choose a photo" theme="primary" />
+        <Button label="Use this photo" theme="secondary" />
+      </View>
     </View>
   );
 }
@@ -11,14 +20,15 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    backgroundColor: "#25292e",
     alignItems: "center",
   },
-  button: {
-    backgroundColor: "blue",
-    padding: 10,
-    fontSize: 20,
-    color: "white",
-    borderRadius: 5,
+  imageContainer: {
+    flex: 1,
+    paddingTop: 28,
+  },
+  footerContainer: {
+    flex: 1 / 3,
+    alignItems: "center",
   },
 });
