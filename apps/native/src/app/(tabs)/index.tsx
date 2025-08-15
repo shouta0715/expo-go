@@ -1,6 +1,8 @@
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
+import * as MediaLibrary from "expo-media-library";
+import { useEffect, useRef, useState } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
+import { captureRef } from "react-native-view-shot";
 import { Button } from "@/components/button";
 import { CircleButton } from "@/components/circle-button";
 import EmojiList from "@/components/emoji-list";
@@ -11,12 +13,20 @@ import { ImageViewer } from "@/components/image-viewer";
 
 const PlaceholderImage = require("@/assets/images/background-image.png");
 export default function Index() {
+  const imageRef = useRef<View | null>(null);
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showAppOptions, setShowAppOptions] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [pickedEmoji, setPickedEmoji] = useState<
     ImageSourcePropType | undefined
   >(undefined);
+
+  useEffect(() => {
+    if (!permissionResponse?.granted) {
+      void requestPermission();
+    }
+  }, [permissionResponse, requestPermission]);
 
   const pickImageAsync = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -34,23 +44,36 @@ export default function Index() {
 
   const onReset = () => {
     setShowAppOptions(false);
+    setSelectedImage(null);
+    setPickedEmoji(undefined);
   };
 
   const onAddSticker = () => {
     setIsModalVisible(true);
   };
 
-  const onSaveImageAsync = () => {
-    console.log("Save image");
-  };
+  const onSaveImageAsync = async () => {
+    try {
+      const localUri = await captureRef(imageRef, {
+        height: 440,
+        quality: 1,
+      });
 
+      await MediaLibrary.saveToLibraryAsync(localUri);
+      if (localUri) {
+        alert("Saved!");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
   const onModalClose = () => {
     setIsModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
+      <View ref={imageRef} collapsable={false} style={styles.imageContainer}>
         <ImageViewer imageSource={selectedImage || PlaceholderImage} />
         {pickedEmoji && (
           <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />

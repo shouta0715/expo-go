@@ -77,7 +77,7 @@ const config = tseslint.config(
     extends: [...tseslint.configs.stylistic],
     rules: {
       "prefer-template": "error",
-      "no-console": "warn",
+      "no-console": ["error", { allow: ["warn", "error", "info", "debug"] }],
       "arrow-body-style": ["error", "as-needed"],
       "padding-line-between-statements": [
         "error",
