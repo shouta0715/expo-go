@@ -1,3 +1,6 @@
-import tailwind from "@package/prettier-config/tailwind";
+import base from "@package/prettier-config/base";
 
-export default tailwind("./src/styles/tailwind.css");
+export default {
+  ...base,
+  plugins: ["prettier-plugin-tailwindcss"],
+};
