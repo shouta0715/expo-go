@@ -13,8 +13,24 @@ export default function Index() {
       <Link asChild push href="/third">
         <Button title="Go to Third" />
       </Link>
-      <Link asChild push href="/(anything)/(fourth)/fifth/sixth">
-        <Button title="Go to Sixth" />
+      <Link
+        asChild
+        push
+        href={{
+          pathname: "/second",
+          params: { name: "John" },
+        }}
+      >
+        <Button theme="secondary" title="Go to Second with params" />
+      </Link>
+      <Link asChild push href="/proverbs/1">
+        <Button theme="secondary" title="Go to Proverb 1" />
+      </Link>
+      <Link asChild push href="/proverbs/2">
+        <Button theme="secondary" title="Go to Proverb 2" />
+      </Link>
+      <Link asChild push href="/products/electronics/123">
+        <Button theme="secondary" title="Go to Product 123 (dynamic)" />
       </Link>
     </View>
   );
