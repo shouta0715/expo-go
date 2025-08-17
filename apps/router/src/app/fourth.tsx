@@ -23,15 +23,6 @@ export default function Index() {
       >
         <Button theme="secondary" title="Go to Second with params" />
       </Link>
-      <Link asChild push href="/proverbs/1">
-        <Button theme="secondary" title="Go to Proverb 1" />
-      </Link>
-      <Link asChild push href="/proverbs/2">
-        <Button theme="secondary" title="Go to Proverb 2" />
-      </Link>
-      <Link asChild push href="/products/electronics/123">
-        <Button theme="secondary" title="Go to Product 123 (dynamic)" />
-      </Link>
     </View>
   );
 }
