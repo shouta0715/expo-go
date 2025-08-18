@@ -20,3 +20,13 @@ pre-push:
       root: "apps/router/"
       glob: "*.{js,jsx,ts,tsx}"
       run: pnpm prettier --write --ignore-unknown {push_files}
+
+    to-essentials-lint:
+      root: "apps/essentials/"
+      glob: "*.{js,jsx,ts,tsx}"
+      run: pnpm eslint --fix {push_files}
+
+    to-essentials-format:
+      root: "apps/essentials/"
+      glob: "*.{js,jsx,ts,tsx}"
+      run: pnpm prettier --write --ignore-unknown {push_files}
