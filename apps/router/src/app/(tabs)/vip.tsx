@@ -1,10 +1,14 @@
 import { View } from "react-native";
 import { AppText } from "@/components/app-text";
 
-export default function Index() {
+function Vip() {
   return (
     <View className="flex-1 justify-center p-4">
-      <AppText center>Nested Screen</AppText>
+      <AppText bold center color="secondary" size="heading">
+        Vip
+      </AppText>
     </View>
   );
 }
+
+export default Vip;
